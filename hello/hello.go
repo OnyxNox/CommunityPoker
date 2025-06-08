@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"example.com/greetings"
+	"golang.org/x/example/hello/reverse"
 )
 
 func main() {
@@ -25,6 +26,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	fmt.Println(reverse.String("Hello"))
 
 	// If no error was returned, print the returned map of
 	// messages to the console.
