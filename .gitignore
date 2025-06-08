@@ -1,0 +1,5 @@
+# Generic ignore
+*.ignore*
+
+# Go binary output files
+*.exe
