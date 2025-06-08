@@ -4,7 +4,7 @@ This project serves as a learning platform for exploring new programming languag
 
 ## Usage
 
-Run the application.
+Run the application from the `./hello` directory.
 
 ```shell
 go run .
