@@ -3,6 +3,7 @@
         "recommendations": [
             "fill-labs.dependi",
             "golang.go",
+            "humao.rest-client",
         ],
     },
     "folders": [
