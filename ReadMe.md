@@ -26,8 +26,6 @@ Since `go-sqlite3` is a CGO-enabled package, you must ensure that the environmen
 
 ### Usage
 
-Run the application from the `./hello` directory.
-
 ```shell
-go run .
+go run ./cmd/server.go
 ```

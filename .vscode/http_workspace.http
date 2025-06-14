@@ -1,23 +1,15 @@
-### Get All Albums
-
-GET http://localhost:8080/albums
-
-
-
-### Get Album by ID
-
-GET http://localhost:8080/albums/2
+@hostName = http://localhost
+@port = 8080
+@host = {{hostName}}:{{port}}
 
 
+### Get All Games
+GET {{host}}/games
 
-### Add Album
 
-POST http://localhost:8080/albums
+### Create New Game
+POST {{host}}/games/new
 Content-Type: application/json
 
 {
-    "id": "4",
-    "title": "The Modern Sound of Betty Carter",
-    "artist": "Betty Carter",
-    "price": 49.99
 }
