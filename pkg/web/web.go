@@ -1,39 +1,82 @@
 package web
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
 
-// Represents a poker game instance.
-type game struct {
-	// Game instance identifier.
-	Id uuid.UUID `json:"id"`
-}
-
-// Collection of poker game instances.
+// Collection of poker games.
 var games = []game{}
 
-// Start Community Poker web server.
+// Starts Community Poker web server.
 func StartServer() {
 	router := gin.Default()
+	router.GET("/games/:gameId", getGame)
 	router.GET("/games", getGames)
+	router.POST("/games/:gameId/join", joinGame)
 	router.POST("/games/new", newGame)
 
 	router.Run("localhost:8080")
 }
 
-// Responds with collection of poker game instances.
+// Returns game if found, otherwise nil.
+func findGame(gameId string) *game {
+	for i := range games {
+		if games[i].Id.String() == gameId {
+			return &games[i]
+		}
+	}
+
+	return nil
+}
+
+// Responds with poker game.
+func getGame(context *gin.Context) {
+	gameId := context.Param("gameId")
+
+	game := findGame(gameId)
+	if game == nil {
+		context.JSON(http.StatusNotFound, gin.H{"message": fmt.Sprintf("Failed to find game %s", gameId)})
+
+		return
+	}
+
+	context.JSON(http.StatusOK, game)
+}
+
+// Responds with collection of poker games.
 func getGames(context *gin.Context) {
 	context.JSON(http.StatusOK, games)
 }
 
-// Creates new poker game instance and responds with its details.
+// Joins poker player to a poker game.
+func joinGame(context *gin.Context) {
+	gameId := context.Param("gameId")
+
+	game := findGame(gameId)
+	if game == nil {
+		context.JSON(http.StatusNotFound, gin.H{"message": fmt.Sprintf("Failed to find game %s", gameId)})
+
+		return
+	}
+
+	newPlayer := player{
+		Id: uuid.New(),
+	}
+
+	game.Players = append(game.Players, newPlayer)
+
+	context.Status(http.StatusOK)
+}
+
+// Creates new poker game and responds with its details.
 func newGame(context *gin.Context) {
 	newGame := game{
-		Id: uuid.New(),
+		Id:      uuid.New(),
+		Players: []player{},
 	}
 
 	games = append(games, newGame)

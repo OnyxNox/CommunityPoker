@@ -7,8 +7,23 @@
 GET {{host}}/games
 
 
+### Get Game by ID
+GET {{host}}/games/{{currentGameId}}
+
+
 ### Create New Game
+# @name joinGame
 POST {{host}}/games/new
+Content-Type: application/json
+
+{
+}
+
+@currentGameId = {{joinGame.response.body.id}}
+
+
+### Join Player to Current Game
+POST {{host}}/games/{{currentGameId}}/join
 Content-Type: application/json
 
 {

@@ -8,6 +8,7 @@ This project serves as a learning platform for exploring new programming languag
 
 Since `go-sqlite3` is a CGO-enabled package, you must ensure that the environment variable `CGO_ENABLED=1` is set and that a `gcc` compiler is within the shell's path.
 
+1. Download and install [Go](https://go.dev/dl/).
 1. Set the `CGO_ENABLED` environment variable to enable CGO support.
     ```shell
     go env -w CGO_ENABLED=1
