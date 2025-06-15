@@ -1,6 +1,6 @@
-# Community Poker Server
+# Community Poker
 
-This project serves as a learning platform for exploring new programming languages, with a current focus on Go. It is a straightforward multiplayer application that allows players to join and compete in poker matches against one another.
+This project serves as a learning platform for exploring Go. It is a straightforward multiplayer application that allows players to join and compete in poker matches against one another.
 
 ## Development
 

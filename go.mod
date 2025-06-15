@@ -1,4 +1,4 @@
-module example.com/community_poker_server
+module example.com/community_poker
 
 go 1.24.4
 
