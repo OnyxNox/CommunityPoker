@@ -14,12 +14,19 @@ var games = []game{}
 // Starts Community Poker web server.
 func StartServer() {
 	router := gin.Default()
-	router.GET("/games/:gameId", getGame)
-	router.GET("/games", getGames)
-	router.POST("/games/:gameId/join", joinGame)
-	router.POST("/games/new", newGame)
 
-	router.Run("localhost:8080")
+	api := router.Group("/api")
+	{
+		games := api.Group("/games")
+		{
+			games.GET("/:gameId", getGame)
+			games.GET("/", getGames)
+			games.POST("/:gameId/join", joinGame)
+			games.POST("/new", newGame)
+		}
+	}
+
+	router.Run(":8080")
 }
 
 // Returns game if found, otherwise nil.

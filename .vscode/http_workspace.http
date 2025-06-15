@@ -1,19 +1,21 @@
 @hostName = http://localhost
 @port = 8080
 @host = {{hostName}}:{{port}}
+@apiUrl = {{host}}/api
+@gamesApiUrl = {{apiUrl}}/games
 
 
 ### Get All Games
-GET {{host}}/games
+GET {{gamesApiUrl}}
 
 
 ### Get Game by ID
-GET {{host}}/games/{{currentGameId}}
+GET {{gamesApiUrl}}/{{currentGameId}}
 
 
 ### Create New Game
 # @name joinGame
-POST {{host}}/games/new
+POST {{gamesApiUrl}}/new
 Content-Type: application/json
 
 {
@@ -23,7 +25,7 @@ Content-Type: application/json
 
 
 ### Join Player to Current Game
-POST {{host}}/games/{{currentGameId}}/join
+POST {{gamesApiUrl}}/{{currentGameId}}/join
 Content-Type: application/json
 
 {
