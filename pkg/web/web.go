@@ -67,7 +67,9 @@ func joinGame(context *gin.Context) {
 		Id: uuid.New(),
 	}
 
-	game.Players = append(game.Players, newPlayer)
+	if game.tryAddPlayer(newPlayer) {
+		game.tryStart()
+	}
 
 	context.Status(http.StatusOK)
 }
@@ -75,8 +77,10 @@ func joinGame(context *gin.Context) {
 // Creates new poker game and responds with its details.
 func newGame(context *gin.Context) {
 	newGame := game{
-		Id:      uuid.New(),
-		Players: []player{},
+		Id:             uuid.New(),
+		MinPlayerCount: 2,
+		MaxPlayerCount: 8,
+		Players:        []player{},
 	}
 
 	games = append(games, newGame)
