@@ -3,6 +3,8 @@ package web
 import (
 	"log"
 
+	"example.com/community_poker/pkg/poker"
+
 	"github.com/google/uuid"
 )
 
@@ -20,6 +22,8 @@ type game struct {
 	// Collection of poker game players.
 	Players []player `json:"players"`
 
+	deck []poker.Card
+
 	// Flag identifying the poker game has been started.
 	isStarted bool
 }
@@ -27,24 +31,36 @@ type game struct {
 // Adds the player to the poker game if the maximum player count threshold hasn't been reached,
 // otherwise noop.
 func (game *game) tryAddPlayer(player player) bool {
-	if len(game.Players) < game.MaxPlayerCount {
-		game.Players = append(game.Players, player)
+	if len(game.Players) >= game.MaxPlayerCount {
+		log.Printf("Failed to add Player %d to Game %d; maximum player count reached", player.Id, game.Id)
 
-		return true
+		return false
 	}
 
-	return false
+	game.Players = append(game.Players, player)
+
+	log.Printf("Added Player %d to Game %d", player.Id, game.Id)
+
+	return true
 }
 
 // Starts the poker game if the minimum player count threshold has been reached, otherwise noop.
 func (game *game) tryStart() bool {
-	if !game.isStarted && len(game.Players) >= game.MinPlayerCount {
-		log.Println("Starting new game server")
+	if game.isStarted {
+		log.Printf("Failed to start Game %d; has already been started", game.Id)
 
-		game.isStarted = true
+		return false
+	} else if len(game.Players) < game.MinPlayerCount {
+		log.Printf("Failed to start Game %d; not have enough players", game.Id)
 
-		return true
+		return false
 	}
 
-	return false
+	game.deck = poker.NewDeck()
+
+	game.isStarted = true
+
+	log.Printf("Started Game %d", game.Id)
+
+	return true
 }
