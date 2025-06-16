@@ -14,14 +14,14 @@ GET {{gamesApiUrl}}/{{currentGameId}}
 
 
 ### Create New Game
-# @name joinGame
+# @name newGame
 POST {{gamesApiUrl}}/new
 Content-Type: application/json
 
 {
 }
 
-@currentGameId = {{joinGame.response.body.id}}
+@currentGameId = {{newGame.response.body.id}}
 
 
 ### Join Player to Current Game

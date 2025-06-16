@@ -1,5 +1,7 @@
 package poker
 
+import "math/rand"
+
 // Represents a playing card suit.
 type Suit uint8
 
@@ -39,4 +41,12 @@ func NewDeck() []Card {
 	}
 
 	return deck
+}
+
+func Shuffle(deck []Card) {
+	for i := len(deck) - 1; i > 0; i-- {
+		j := rand.Intn(i + 1)
+
+		deck[i], deck[j] = deck[j], deck[i]
+	}
 }
