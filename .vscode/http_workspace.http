@@ -6,7 +6,7 @@
 
 
 ### Get All Games
-GET {{gamesApiUrl}}
+GET {{gamesApiUrl}}/
 
 
 ### Get Game by ID
@@ -21,7 +21,7 @@ Content-Type: application/json
 {
 }
 
-@currentGameId = {{newGame.response.body.id}}
+@currentGameId = {{newGame.response.body.gameId}}
 
 
 ### Join Player to Current Game

@@ -8,7 +8,6 @@ import (
 	"example.com/community_poker/pkg/poker"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 // Poker games collection.
@@ -38,7 +37,7 @@ func main() {
 // Returns poker game if found, otherwise nil.
 func findGame(gameId string) *poker.Game {
 	for i := range games {
-		if games[i].Id.String() == gameId {
+		if games[i].GameId.String() == gameId {
 			return &games[i]
 		}
 	}
@@ -76,20 +75,21 @@ func joinGame(context *gin.Context) {
 		return
 	}
 
-	player := poker.Player{
-		Id: uuid.New(),
-	}
+	player := poker.NewPlayer()
 
 	if game.TryAddPlayer(player) {
 		game.TryStart()
 	}
 
-	context.Status(http.StatusOK)
+	context.JSON(http.StatusOK, game)
 }
 
 // Creates new poker game and responds with its details.
 func newGame(context *gin.Context) {
-	game := poker.NewGame(2, 8)
+	minPlayerCount := 2
+	maxPlayerCount := 10
+
+	game := poker.NewGame(minPlayerCount, maxPlayerCount)
 
 	games = append(games, *game)
 

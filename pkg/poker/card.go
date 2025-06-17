@@ -12,15 +12,14 @@ const (
 	Spades
 )
 
-func (suit Suit) ToString(toSymbol bool) string {
-	var outputStrings [4]string
-	if toSymbol {
-		outputStrings = [...]string{"♣", "♦", "♥", "♠"}
-	} else {
-		outputStrings = [...]string{"Clubs", "Diamonds", "Hearts", "Spades"}
-	}
+// Converts the enumerator's numeric value to its corresponding string.
+func (suit Suit) String() string {
+	return [...]string{"♣", "♦", "♥", "♠"}[suit]
+}
 
-	return outputStrings[suit]
+// Converts the enumerator's numeric value to its corresponding string during JSON encoding.
+func (suit Suit) MarshalJSON() ([]byte, error) {
+	return []byte(`"` + suit.String() + `"`), nil
 }
 
 // Represent a playing card.
@@ -32,6 +31,7 @@ type Card struct {
 	Suit Suit
 }
 
+// Initializes a new deck of playing cards.
 func NewDeck() []Card {
 	var deck []Card
 	for suit := Clubs; suit <= Spades; suit++ {
@@ -43,6 +43,7 @@ func NewDeck() []Card {
 	return deck
 }
 
+// Shuffles a deck of playing cards randomly.
 func Shuffle(deck []Card) {
 	for i := len(deck) - 1; i > 0; i-- {
 		j := rand.Intn(i + 1)

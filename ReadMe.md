@@ -30,3 +30,7 @@ Since `go-sqlite3` is a CGO-enabled package, you must ensure that the environmen
 ```shell
 go run ./cmd/server.go
 ```
+
+## References
+
+- [Texas Hold'em Rules](https://officialgamerules.org/game-rules/texas-holdem/)
